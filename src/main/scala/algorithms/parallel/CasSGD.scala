@@ -49,7 +49,7 @@ abstract class CasSGD(inputs: CSRMatrix,
   require(miniBatchSize <= itCtrRatio, "mini-batch should be smaller than history granularity")
   val renormHR = historyRatio / itCtrRatio  // Renormalize history ratio so behaviour is as expected
 
-  // Used to store the parameters and compute the actual suboptimality in the end
+  // Used to store the parameters and compute the actual suboptimality in the end @ST ???
   val parametersHistory = Array.fill[(Double, Array[Double], Int)](iterations / historyRatio + 1)(0L, Array.fill[Double](dimension)(0L), 0)
 
   // compute the pi probabilities
@@ -82,7 +82,7 @@ abstract class CasSGD(inputs: CSRMatrix,
   // full loss computation
   def computeFullLoss(inputs: CSRMatrix, output: Array[Double], parameters: Array[Double], lambda: Double): Double
 
-  // history of losses computation
+  // history of losses computation @ST ???
   def computeAllLosses(historyLosses: Array[String]) {
     val availableCores = Runtime.getRuntime.availableProcessors()
     val futures = (0 until availableCores).map(
@@ -91,7 +91,7 @@ abstract class CasSGD(inputs: CSRMatrix,
     Await.ready(Future.sequence(futures), Duration.Inf)
   }
 
-  // for parallel loss computation
+  // for parallel loss computation @ST ???
   def computeSplitLosses(historyLosses: Array[String], i: Int, cores: Int) {
     for (j <- 0 until historyLosses.size) {
       if (j % cores == i) {

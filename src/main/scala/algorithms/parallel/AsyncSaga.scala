@@ -27,7 +27,7 @@ abstract class AsyncSaga(inputs: CSRMatrix,
 
   def run(printLosses: Boolean, verbose: Boolean) {
     // initialization
-    initializeParameters()
+    initializeParameters()  // @ST set as 0
 
     // First pass with constant step-size SGD in order to compute the historical gradient at no initial cost
     val atomicCurrentAverageGradient = new AtomicDoubleArray(inputs.nCols)
@@ -57,7 +57,7 @@ abstract class AsyncSaga(inputs: CSRMatrix,
 
     for (i <- 1 to (iterations + 1) / cores) {
       // pick a random number
-      val index = nextInt(n)
+      val index = nextInt(n)  // @ST random number generation
 
       // compute the partial gradient using the parameters
       val scalar = atomicCPG(inputs, output(index), atomicParameters, index)
