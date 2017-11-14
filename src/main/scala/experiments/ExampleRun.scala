@@ -18,7 +18,7 @@ object ExampleRun {
       miniBatchSize = 10)
 
     // warm-up run to account for JVM optimization at runtime
-    asls.run(false, true)
+    asls.run(false, false)
 
     System.gc()
     asls.run(true, true)

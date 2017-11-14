@@ -67,8 +67,8 @@ abstract class AsyncSaga(inputs: CSRMatrix,
       for (j <- inputs.indPtr(index) until inputs.indPtr(index + 1)) {
         val k = inputs.indices(j)
         val v = inputs.data(j)
-        atomicParameters.addAndGet(k,
-          - stepSize * (v * (scalar - oldScalar) + inversePi(k) * (atomicCAG.get(k) + lambda * atomicParameters.get(k))))
+        atomicParameters.addAndGet(k,    // @ST Atomically adds the given value to the element at index k
+          - stepSize * (v * (scalar - oldScalar) + inversePi(k) * (atomicCAG.get(k) + lambda * atomicParameters.get(k))))  // @ST sparse regularization preserves unbiased lambda*w
       }
 
       // update the average gradient and the historical one
